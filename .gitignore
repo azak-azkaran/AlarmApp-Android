@@ -15,3 +15,9 @@ gen/
 # Local configuration file (sdk path, etc)
 local.properties
 .DS_Store
+
+.classpath
+
+lint.xml
+
+libs/android-support-v4.jar
