@@ -193,6 +193,8 @@ public class MainActivity extends Activity {
 		}
 
 		setContentView(R.layout.main);
+		getWindow().getDecorView().getRootView()
+				.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
 		LogEx.verbose("Ringtone is "
 				+ AlarmApp.getPreferences().getString("alarm_ringtone", null));

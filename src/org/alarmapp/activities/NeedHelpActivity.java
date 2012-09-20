@@ -91,6 +91,10 @@ public class NeedHelpActivity extends Activity {
 		}
 
 		setContentView(R.layout.need_help_activity);
+		View rootView = getWindow().getDecorView().getRootView();
+
+		rootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+				| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
 		btNeedHelp = (Button) findViewById(R.id.btNeedHelp);
 		btNeedHelp.setOnClickListener(onNeedHelpClick);
