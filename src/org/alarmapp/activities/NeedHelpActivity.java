@@ -17,15 +17,22 @@
 package org.alarmapp.activities;
 
 import org.alarmapp.AlarmApp;
+import org.alarmapp.Broadcasts;
 import org.alarmapp.R;
+import org.alarmapp.model.AlarmedUser;
+import org.alarmapp.model.classes.AlarmedUserData;
 import org.alarmapp.util.IntentUtil;
 import org.alarmapp.util.LogEx;
 import org.alarmapp.util.RingtoneUtil;
 import org.alarmapp.web.WebException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -41,6 +48,35 @@ public class NeedHelpActivity extends Activity {
 
 	Button btNeedHelp;
 
+	private final BroadcastReceiver alarmStatusChangedBroadCastReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			final AlarmedUser changedUser = AlarmedUserData.create(intent
+					.getExtras());
+
+			runOnUiThread(new Runnable() {
+
+				public void run() {
+					refreshNeedHelpStatus(changedUser);
+				}
+			});
+		}
+	};
+
+	private void refreshNeedHelpStatus(AlarmedUser changedUser) {
+		final AlertDialog d = new AlertDialog.Builder(this).create();
+		d.setTitle("Hilferuf angenommen");
+		d.setMessage(changedUser.getFullName()
+				+ " hat Ihren Hilferuf angenommen... ");
+
+		d.setButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				d.dismiss();
+			}
+		});
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -55,6 +91,10 @@ public class NeedHelpActivity extends Activity {
 		}
 
 		setContentView(R.layout.need_help_activity);
+		View rootView = getWindow().getDecorView().getRootView();
+
+		rootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+				| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
 		btNeedHelp = (Button) findViewById(R.id.btNeedHelp);
 		btNeedHelp.setOnClickListener(onNeedHelpClick);
@@ -69,6 +109,12 @@ public class NeedHelpActivity extends Activity {
 		}
 
 	}
+
+	protected void onResume() {
+		super.onResume();
+		Broadcasts.registerForAlarmstatusChangedBroadcast(this,
+				alarmStatusChangedBroadCastReceiver);
+	};
 
 	ProgressDialog progress;
 

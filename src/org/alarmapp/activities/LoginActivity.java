@@ -28,7 +28,6 @@ import org.alarmapp.web.HttpWebClient;
 import org.alarmapp.web.WebClient;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -54,7 +53,6 @@ public class LoginActivity extends Activity {
 	private ProgressBar pbLogin;
 	private TextView tvLoginProgress;
 	private TextView tvProgressStep;
-	private AlertDialog dErrorMessage;
 	private User user;
 
 	private boolean isPushServiceBroadcastRegistered = false;
@@ -153,7 +151,6 @@ public class LoginActivity extends Activity {
 	OnClickListener onCreateClick = new OnClickListener() {
 
 		public void onClick(View v) {
-			User user = AlarmApp.getUser();
 			IntentUtil.displayAccountCreateActivity(LoginActivity.this);
 		}
 	};

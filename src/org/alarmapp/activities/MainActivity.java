@@ -172,6 +172,14 @@ public class MainActivity extends Activity {
 		}
 	};
 
+	private Runnable neeedHelpClick = new Runnable() {
+
+		public void run() {
+			IntentUtil.displayNeedhelpAcitivity(MainActivity.this);
+
+		}
+	};
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -185,6 +193,8 @@ public class MainActivity extends Activity {
 		}
 
 		setContentView(R.layout.main);
+		getWindow().getDecorView().getRootView()
+				.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
 		LogEx.verbose("Ringtone is "
 				+ AlarmApp.getPreferences().getString("alarm_ringtone", null));
@@ -218,6 +228,8 @@ public class MainActivity extends Activity {
 		entries.add(new MenuEntry(getString(R.string.feedback_menu_title),
 				getString(R.string.feedback_menu_desc), MenuEntry.COLOR_RED,
 				feedbackClick));
+		entries.add(new MenuEntry("Hilfe", "Ich brauche hilfe",
+				MenuEntry.COLOR_BLUE, neeedHelpClick));
 
 		// entries.add(new MenuEntry("Lösche", "Alarmtonverzeichnis",
 		// MenuEntry.COLOR_BLUE, deleteRingtoneDir));

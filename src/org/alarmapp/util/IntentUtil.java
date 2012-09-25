@@ -27,6 +27,7 @@ import org.alarmapp.activities.AlarmStatusActivity;
 import org.alarmapp.activities.InformationActivity;
 import org.alarmapp.activities.LoginActivity;
 import org.alarmapp.activities.MainActivity;
+import org.alarmapp.activities.NeedHelpActivity;
 import org.alarmapp.activities.map.AlarmMapActivity;
 import org.alarmapp.model.Alarm;
 import org.alarmapp.model.WayPoint;
@@ -165,5 +166,11 @@ public class IntentUtil {
 	public static void displayAlarmCreateActivity(Context context) {
 		Intent intent = new Intent(context, AlarmCreateActivity.class);
 		context.startActivity(intent);
+	}
+
+	public static void displayNeedhelpAcitivity(MainActivity context) {
+		Intent intent = new Intent(context, NeedHelpActivity.class);
+		context.startActivity(intent);
+
 	}
 }

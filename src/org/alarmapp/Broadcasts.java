@@ -16,6 +16,7 @@
 
 package org.alarmapp;
 
+import org.alarmapp.model.Alarm;
 import org.alarmapp.model.AlarmedUser;
 import org.alarmapp.util.Ensure;
 
@@ -25,6 +26,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 public class Broadcasts {
+	public static String ALARM_RECEIVED = "org.alarmapp.alarm_received";
 	public static String ALARMSTATUS_CHANGED = "org.alarmapp.alarm_status_changed";
 	public static String C2DM_REGISTERED = "org.alarmapp.c2dm_registered";
 	public static String SMARTPHONE_CREATED = "org.alarmapp.smartphone_created";
@@ -48,6 +50,22 @@ public class Broadcasts {
 		Intent intent = new Intent(ALARMSTATUS_CHANGED);
 		intent.putExtras(changedUser.getBundle());
 		ctxt.sendBroadcast(intent);
+	}
+
+	public static void sendAlarmReceivedBroadcast(Context ctxt, Alarm a) {
+		Ensure.notNull(a);
+		Ensure.notNull(ctxt);
+
+		Intent i = new Intent(ALARM_RECEIVED);
+		i.putExtras(a.getBundle());
+
+		ctxt.sendBroadcast(i);
+
+	}
+
+	public static void registerForAlarmReceivedBroadcast(Context ctxt,
+			BroadcastReceiver receiver) {
+		ctxt.registerReceiver(receiver, new IntentFilter(ALARM_RECEIVED));
 	}
 
 	public static void registerForAlarmstatusChangedBroadcast(Context ctxt,
